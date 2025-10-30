@@ -1,0 +1,65 @@
+# Build directories
+/build/
+/build-*/
+/cmake-build-*/
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+
+# Executables and binaries
+*.exe
+*.out
+*.app
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+
+# Object and temp files
+*.o
+*.obj
+*.pch
+*.pdb
+*.mod
+*.idb
+*.ilk
+*.tmp
+lexter
+
+# Logs and debugging
+*.log
+*.stackdump
+core
+vgcore.*
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.user
+*.sln
+*.vcxproj*
+*.xcodeproj
+*.DS_Store
+Thumbs.db
+
+# OS-specific
+.DS_Store
+ehthumbs.db
+Icon?
+desktop.ini
+
+# Test or temp outputs
+/bin/
+/out/
+/dist/
+/Debug/
+/Release/
