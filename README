@@ -1,0 +1,65 @@
+## All symbols
+- = (assign)
+- \+ (add)
+- += (self add)
+- ++ (increment 1)
+- \- (subtract)
+- -= (self subtract)
+- \-\- (decrement 1)
+- \* (multiply)
+- \*\* (power)
+- \*= (self multiply)
+- / (divide)
+- /= (self divide)
+- // (root)
+- . (middle of number or start of number = decimal)
+- ! (not)
+- != (not equal)
+- == (equal)
+- % (modulus)
+- \# (comment)
+- (), [], {} (brackets)
+- '', "" (string)
+- `` (formatted string)
+- , (comma)
+- \> (greater)
+- \>= (greater or equal)
+- < (smaller)
+- <= (smaller or equal)
+- \\ (escape)
+    - Available escape sequence:
+    - \\a
+    - \\n
+    - \\b
+    - \\r
+    - \\f
+    - \\t
+    - \\\\
+    - \\'
+    - \\\`
+- : function notation / ternary operator
+- ? ternary operator
+- ; delimator idk
+
+## Keywords
+- import
+- return
+- break
+- while (create a condition loop)
+- loop (create a continuous loop, match with 'until' keyword)
+- until (used in loop only, only a keyword in loop)
+- del
+- ref
+- if
+- else
+- elseif
+- match 
+- case
+- execute
+- force (used in import only, only a keyword in loop)
+- class 
+- true (constant for "true" 1)
+- false (constant for "false" 0)
+- this (used in function or class function, to refer a global variable or class variable)
+- typeof (get the name of the type, if class, get the name of the class)
+- null (constant for "null")
