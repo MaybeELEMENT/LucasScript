@@ -13,7 +13,7 @@ int main() {
         lexer.dump();
     }
     catch(LexerException& e) {
-        printf("Lexer Error on line %d: %d\n", e.line, e.errorType);
+        printf("Lexer Error on line %d, column %d: %d\n", e.line, e.column, e.errorType);
         return 1;
     }
     

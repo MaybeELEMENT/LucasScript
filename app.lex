@@ -2,6 +2,18 @@
 import "@package/packageName" # This will auto download package from our package manager (like npmjs.com), cache it, and import it
 import force "http://example.com/packageName" # This download package from the given url, import it, but never cache it bcuz of "force" keyword so it download everytime script run
 
+class Hello {
+    hello = 1
+    ref hi = hello
+    getHello : () {
+        return hello
+    }
+    #changing hi will also change hello since hi is a reference to hello
+    setHi : (value) {
+        hi = value
+    }
+}
+
 #This define a function with name functionName and parameters x and y
 #The syntax is refered from math's function notation (f : x, y -> x + y)
 #identify whether the functionName token is a function by the second token being a colon
@@ -43,7 +55,7 @@ i = 10 #This will define a new variable i since the i in the loop is out of scop
 
 while (i > 0) {
     log(i) #This will log the value of i from 0 to 10
-    i -= 1 #This will increment i by 1
+    i -= 1.1 #This will increment i by 1
 }
 
 # we can store using map<string, variableClass> to store variables with string keys
