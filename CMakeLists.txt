@@ -27,6 +27,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "lexter")
 target_include_directories(${PROJECT_NAME}
     PRIVATE
         ${CMAKE_SOURCE_DIR}/include
+        ${CMAKE_SOURCE_DIR}/src
 )
 
 # Optional: Set warnings and useful compile options

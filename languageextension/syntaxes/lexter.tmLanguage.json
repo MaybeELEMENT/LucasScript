@@ -1,0 +1,124 @@
+{
+  "scopeName": "source.lexter",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#keywords" },
+    { "include": "#functions" },
+    { "include": "#classes" },
+    { "include": "#variables" },
+    { "include": "#types" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.lexter",
+          "match": "#.*$"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.lexter",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "match": "\\\\.",
+              "name": "constant.character.escape.lexter"
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.lexter",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "match": "\\\\.",
+              "name": "constant.character.escape.lexter"
+            }
+          ]
+        },
+        {
+          "name": "string.interpolated.lexter",
+          "begin": "`",
+          "end": "`",
+          "patterns": [
+            {
+              "name": "variable.interpolation.lexter",
+              "match": "\\{[A-Za-z_][A-Za-z0-9_]*\\}"
+            }
+          ]
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "storage.type.lexter",
+          "match": "\\b(int|dec|string|bool)\\b"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.lexter",
+          "match": "\\b\\d+(\\.\\d+)?\\b"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.lexter",
+          "match": "\\b(import|return|break|while|loop|until|del|if|else|elif|match|case|execute|class|typeof|ref)\\b"
+        },
+        {
+          "name": "constant.language.lexter",
+          "match": "\\b(true|false|null|this)\\b"
+        },
+        {
+          "name": "keyword.control.lexter",
+          "match": "\\b(?<=import\\s+)force\\b"
+        },
+        {
+          "name": "keyword.loop.until.lexter",
+          "match": "\\b(?<=loop[^{]*?)until\\b"
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "name": "entity.name.function.lexter",
+          "match": "\\b([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()"
+        }
+      ]
+    },
+    "classes": {
+      "patterns": [
+        {
+          "name": "storage.type.class.lexter",
+          "match": "\\bclass\\b"
+        },
+        {
+          "name": "entity.name.type.class.lexter",
+          "match": "\\bclass\\s+([A-Za-z_][A-Za-z0-9_]*)"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.lexter",
+          "match": "\\b(?!int\\b|dec\\b|string\\b|bool\\b)[A-Za-z_][A-Za-z0-9_]*\\b"
+        }
+      ]
+    }
+  }
+}

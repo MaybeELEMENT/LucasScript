@@ -52,7 +52,7 @@
 - ref
 - if
 - else
-- elseif
+- elif
 - match 
 - case
 - execute

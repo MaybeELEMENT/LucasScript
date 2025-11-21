@@ -1,0 +1,28 @@
+{
+  "name": "lexter-syntax",
+  "displayName": "Lexter Syntax Highlighting",
+  "description": "Syntax highlighting for Lexter",
+  "version": "0.0.1",
+  "publisher": "Lucas",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "lexter",
+        "aliases": ["Lexter", "lexter"],
+        "extensions": [".lex"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "lexter",
+        "scopeName": "source.lexter",
+        "path": "./syntaxes/lexter.tmLanguage.json"
+      }
+    ]
+  }
+}

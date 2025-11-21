@@ -1,10 +1,14 @@
 // By Lucas
 #include "lexer.h"
+#include "parser.h"
 
 void Lexer::addToken(std::string& token, Token::Type& type, std::vector<Token>& tokens, std::vector<Token> children) {
-    if(type == Token::KEYWORD) {
+    if(type == Token::NAME) {
         if(token == "true" || token == "false" || token == "null") {
             type = Token::CONSTANT;
+        }
+        if(std::find(Parser_Def::keywords.begin(), Parser_Def::keywords.end(), token) != Parser_Def::keywords.end()) {
+            type = Token::KEYWORD;
         }
     }
     tokens.push_back(Token(type, token, children, line, column));
@@ -26,6 +30,7 @@ std::string getToken(Token::Type type) {
         case Token::STRING: return "STRING";
         case Token::FORMATTED_STRING: return "FORMATTED_STRING";
         case Token::CONSTANT: return "CONSTANT";
+        case Token::NAME: return "NAME";
         default: return "NONE";
     }
 }
@@ -46,14 +51,6 @@ void dumping(const std::vector<Token>& tokens, int depth) {
 
 void Lexer::dump() {
     dumping(tokens, 0);
-    // printf("Src: %s\n\n", src.c_str());
-    // for(auto token : tokens) {
-    //     if(token.getType() == Token::END_OF_LINE) {
-    //         printf("END_OF_LINE\n");
-    //         continue;
-    //     }
-    //     printf("%s, '%s', %i\n", getToken(token.getType()).c_str(), token.getValue().c_str(), token.getLine());
-    // }
 }
 
 std::vector<Token> Lexer::parse(char endChar) {
@@ -61,7 +58,6 @@ std::vector<Token> Lexer::parse(char endChar) {
     std::string currentToken;
     Token::Type type = Token::NONE;
     
-
     for(; index < src.length(); index++, column++) {
         char c = src[index];
         switch(c) {
@@ -81,7 +77,7 @@ std::vector<Token> Lexer::parse(char endChar) {
             case '\n':
                 if(type != Token::NONE) {
                     if(inString != 0) {
-                        throw LexerException(LexerException::UNTERMINATED_STRING, line, column);
+                        throw LexerException(LexerException::UNTERMINATED_STRING, "Missing closing quote", line, column);
                     }
                     addToken(currentToken, type, res);
                 }
@@ -160,7 +156,7 @@ std::vector<Token> Lexer::parse(char endChar) {
                     currentToken += c;
                     break;
                 }
-                if(type == Token::KEYWORD || type == Token::INTEGER || type == Token::DECIMAL || (type == Token::OPERATOR && currentToken == ".")) {
+                if(type == Token::NAME || type == Token::INTEGER || type == Token::DECIMAL || (type == Token::OPERATOR && currentToken == ".")) {
                     if(type == Token::OPERATOR && currentToken == ".") {
                         type = Token::DECIMAL;
                     }
@@ -175,11 +171,12 @@ std::vector<Token> Lexer::parse(char endChar) {
                 break;
             case '\\':
             {
+                
                 if(type != Token::STRING && type != Token::FORMATTED_STRING) {
-                    throw LexerException(LexerException::UNEXPECTED_ESCAPE_SEQUENCE, line, column);
+                    throw LexerException(LexerException::UNEXPECTED_ESCAPE_SEQUENCE, "Escape sequence should only be used in a string literal only", line, column);
                 }
                 if(index + 1 >= src.length()) {
-                    throw LexerException(LexerException::UNTERMINATED_ESCAPE_SEQUENCE, line, column);
+                    throw LexerException(LexerException::UNTERMINATED_ESCAPE_SEQUENCE, "Escape character was expected", line, column);
                 }
                 char nextChar = src[++index];
                 switch(nextChar) {
@@ -218,9 +215,9 @@ std::vector<Token> Lexer::parse(char endChar) {
                     case '\r':
                     case '\a':
                     case '\b':
-                        throw LexerException(LexerException::EXPECTED_ESCAPE_CHARACTER, line, column);
+                        throw LexerException(LexerException::EXPECTED_ESCAPE_CHARACTER, "Escape character was expected", line, column);
                     default:
-                        throw LexerException(LexerException::UNSUPPORTED_ESCAPE_SEQUENCE, line, column);
+                        throw LexerException(LexerException::UNSUPPORTED_ESCAPE_SEQUENCE, std::string("Escape sequence \\").append(std::string(1, nextChar)).append(" was not supported."), line, column);
                 }
                 break;
             }
@@ -235,7 +232,7 @@ std::vector<Token> Lexer::parse(char endChar) {
                     break;
                 }
                 if(type == Token::DECIMAL) {
-                    throw LexerException(LexerException::INVALID_SYNTAX, line, column);
+                    throw LexerException(LexerException::INVALID_SYNTAX, "\'.\' cannot be placed after decimal literal", line, column);
                 }
                 if(type != Token::NONE) {
                     addToken(currentToken, type, res);
@@ -427,16 +424,29 @@ std::vector<Token> Lexer::parse(char endChar) {
                     addToken(currentToken, type, res);
                 }
                 if(layer < 1) {
-                    throw LexerException(LexerException::UNEXPECTED_SYNTAX, line, column);
+                    std::string msg;
+                    msg = "Unexpected syntax '";
+                    msg.push_back(c);
+                    msg += "', '";
+                    msg.push_back(c == ')' ? '(' : c == '}' ? '{' : '[');
+                    msg += "' was expected before '";
+                    msg.push_back(c);
+                    msg += "'";
+                    throw LexerException(LexerException::UNEXPECTED_SYNTAX, msg, line, column);
                 }
                 if(c != endChar) {
-                    throw LexerException(LexerException::CLOSING_UNMATCH, line, column);
+                    std::string msg;
+                    msg = "Syntax unmatch, '";
+                    msg.push_back(endChar);
+                    msg += "' was expected";
+                    throw LexerException(LexerException::CLOSING_UNMATCH, msg, line, column);
                 }
                 layer--;
                 return res;
             case ',':
             case ':':
             case '?':
+            case ';':
                 if(type == Token::STRING || type == Token::FORMATTED_STRING) {
                     currentToken += c;
                     break;
@@ -449,29 +459,35 @@ std::vector<Token> Lexer::parse(char endChar) {
                 break;
             default:
                 if(type == Token::NONE)
-                    type = Token::KEYWORD;
-                if(type != Token::KEYWORD && type != Token::STRING && type != Token::FORMATTED_STRING) {
+                    type = Token::NAME;
+                if(type != Token::NAME && type != Token::STRING && type != Token::FORMATTED_STRING) {
                     addToken(currentToken, type, res);
-                    type = Token::KEYWORD;
+                    type = Token::NAME;
                 }
                 currentToken += c;
                 break;
         }
-        // Additional parsing logic would be implemented here
     }
     
     if(inString != 0) {
-        throw LexerException(LexerException::UNTERMINATED_STRING, line, column);
+        throw LexerException(LexerException::UNTERMINATED_STRING, "Missing closing quote before end of file", line, column);
     }
     if(type != Token::NONE) { 
         addToken(currentToken, type, res);
     }
     if(layer > 0 && index >= src.length()) {
-        throw LexerException(LexerException::EXPECTED_CLOSING, line, column);
+        std::string msg;
+        msg = "Syntax unmatch, '";
+        msg.push_back(endChar);
+        msg += "' was expected";
+        throw LexerException(LexerException::EXPECTED_CLOSING, msg, line, column);
     }
     return res;
 }
 
 void Lexer::start() {
     tokens = parse();
+}
+std::vector<Token> Lexer::getTokens() {
+    return tokens;
 }
