@@ -31,7 +31,7 @@ compile_commands.json
 *.idb
 *.ilk
 *.tmp
-lexter
+lscript
 
 # Logs and debugging
 *.log

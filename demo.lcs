@@ -35,11 +35,12 @@ calculator() = {
 }
 
 demoMain() = {
-    printl("=====DEMO=====")
-    printl("This is a demo of the Language interpreter.");
-    printl("Test demo:")
-    printl("[1] Calculator")
     while(true) {
+        sysRun("clear");
+        printl("=====DEMO=====")
+        printl("This is a demo of the Language interpreter.");
+        printl("Test demo:")
+        printl("[1] Calculator")
         choice = input("Which one do you want to do: ")
         if(choice == "1") {
             calculator();

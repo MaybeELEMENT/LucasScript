@@ -1,5 +1,5 @@
 {
-  "scopeName": "source.lexter",
+  "scopeName": "source.lscript",
   "patterns": [
     { "include": "#comments" },
     { "include": "#strings" },
@@ -14,7 +14,7 @@
     "comments": {
       "patterns": [
         {
-          "name": "comment.line.number-sign.lexter",
+          "name": "comment.line.number-sign.lscript",
           "match": "#.*$"
         }
       ]
@@ -22,34 +22,34 @@
     "strings": {
       "patterns": [
         {
-          "name": "string.quoted.double.lexter",
+          "name": "string.quoted.double.lscript",
           "begin": "\"",
           "end": "\"",
           "patterns": [
             {
               "match": "\\\\.",
-              "name": "constant.character.escape.lexter"
+              "name": "constant.character.escape.lscript"
             }
           ]
         },
         {
-          "name": "string.quoted.single.lexter",
+          "name": "string.quoted.single.lscript",
           "begin": "'",
           "end": "'",
           "patterns": [
             {
               "match": "\\\\.",
-              "name": "constant.character.escape.lexter"
+              "name": "constant.character.escape.lscript"
             }
           ]
         },
         {
-          "name": "string.interpolated.lexter",
+          "name": "string.interpolated.lscript",
           "begin": "`",
           "end": "`",
           "patterns": [
             {
-              "name": "variable.interpolation.lexter",
+              "name": "variable.interpolation.lscript",
               "match": "\\{[A-Za-z_][A-Za-z0-9_]*\\}"
             }
           ]
@@ -59,7 +59,7 @@
     "types": {
       "patterns": [
         {
-          "name": "storage.type.lexter",
+          "name": "storage.type.lscript",
           "match": "\\b(int|dec|string|bool)\\b"
         }
       ]
@@ -67,7 +67,7 @@
     "numbers": {
       "patterns": [
         {
-          "name": "constant.numeric.lexter",
+          "name": "constant.numeric.lscript",
           "match": "\\b\\d+(\\.\\d+)?\\b"
         }
       ]
@@ -75,23 +75,23 @@
     "keywords": {
       "patterns": [
         {
-          "name": "keyword.control.lexter",
+          "name": "keyword.control.lscript",
           "match": "\\b(import|return|break|while|loop|until|del|if|else|elif|match|case|execute|class|typeof|ref)\\b"
         },
         {
-          "name": "constant.language.lexter",
+          "name": "constant.language.lscript",
           "match": "\\b(true|false|null|this)\\b"
         },
         {
-          "name": "keyword.control.lexter",
+          "name": "keyword.control.lscript",
           "match": "\\b(?<=import\\s+)force\\b"
         },
         {
-          "name": "keyword.loop.until.lexter",
+          "name": "keyword.loop.until.lscript",
           "match": "\\b(?<=loop[^{]*?)until\\b"
         },
         {
-          "name": "keyword.logical.lexter",
+          "name": "keyword.logical.lscript",
           "match": "\\b(and|or)\\b"
         }
       ]
@@ -99,7 +99,7 @@
     "functions": {
       "patterns": [
         {
-          "name": "entity.name.function.lexter",
+          "name": "entity.name.function.lscript",
           "match": "\\b([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()"
         }
       ]
@@ -107,11 +107,11 @@
     "classes": {
       "patterns": [
         {
-          "name": "storage.type.class.lexter",
+          "name": "storage.type.class.lscript",
           "match": "\\bclass\\b"
         },
         {
-          "name": "entity.name.type.class.lexter",
+          "name": "entity.name.type.class.lscript",
           "match": "\\bclass\\s+([A-Za-z_][A-Za-z0-9_]*)"
         }
       ]
@@ -119,7 +119,7 @@
     "variables": {
       "patterns": [
         {
-          "name": "variable.other.lexter",
+          "name": "variable.other.lscript",
           "match": "\\b(?!int\\b|dec\\b|string\\b|bool\\b)[A-Za-z_][A-Za-z0-9_]*\\b"
         }
       ]

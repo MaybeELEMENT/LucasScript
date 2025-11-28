@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.15)
 
 # Project info
-project(Lexter
+project(LScript
     VERSION 1.0
-    DESCRIPTION "Lexter C++17 executable project"
+    DESCRIPTION "LScript C++17 interpreter language"
     LANGUAGES CXX
 )
 
@@ -21,7 +21,7 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Force output binary name to lowercase
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "lexter")
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "lscript")
 
 # Include headers
 target_include_directories(${PROJECT_NAME}

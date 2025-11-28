@@ -1,6 +1,6 @@
-# Lexter Syntax Highlighting
+# LScript Syntax Highlighting
 
-Adds syntax highlighting for the **Lexter** language.
+Adds syntax highlighting for the **LScript** language.
 
 ### Features
 - Highlights keywords, strings, numbers, comments, functions, and classes

@@ -1,7 +1,7 @@
 {
-  "name": "lexter-syntax",
-  "displayName": "Lexter Syntax Highlighting",
-  "description": "Syntax highlighting for Lexter",
+  "name": "lscript-syntax",
+  "displayName": "LScript Syntax Highlighting",
+  "description": "Syntax highlighting for LScript",
   "version": "0.0.1",
   "publisher": "Lucas",
   "engines": {
@@ -11,17 +11,17 @@
   "contributes": {
     "languages": [
       {
-        "id": "lexter",
-        "aliases": ["Lexter", "lexter"],
-        "extensions": [".lex"],
+        "id": "lscript",
+        "aliases": ["LScript", "lscript"],
+        "extensions": [".lcs"],
         "configuration": "./language-configuration.json"
       }
     ],
     "grammars": [
       {
-        "language": "lexter",
-        "scopeName": "source.lexter",
-        "path": "./syntaxes/lexter.tmLanguage.json"
+        "language": "lscript",
+        "scopeName": "source.lscript",
+        "path": "./syntaxes/lscript.tmLanguage.json"
       }
     ]
   }

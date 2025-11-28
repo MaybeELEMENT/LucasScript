@@ -7,12 +7,19 @@
 #include <parse/parser.h>
 #include <sstream>
 #include <iomanip>
+#include <utils/argument.h>
 extern std::unordered_map<std::string, Variable> varGlobal;
 
-int main()
+int main(int argc, char** argv)
 {
+    Lucas::ArgumentParser argparser;
+    argparser.parse(argc, argv);
     // Everything starts here
-    std::ifstream file("app.lex");
+    if(argparser.getRaw().size() < 1) {
+        printf("No input file provided.\n");
+        return 1;
+    }
+    std::ifstream file(argparser.getRaw()[0]);
     std::string src((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     try
     {
