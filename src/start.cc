@@ -1,4 +1,4 @@
-// Created on 30 Oct 2025 by Lucas & Skript
+// Created on 30 Oct 2025 by Lucas
 #include <stdio.h>
 #include <string>
 #include <fstream>
