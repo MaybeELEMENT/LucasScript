@@ -273,7 +273,7 @@ std::vector<Token> Lexer::parse(char endChar) {
                     type = Token::COMPARISON;
                     break;
                 }
-                type = Token::COMPARISON;
+                type = Token::OPERATOR;
                 break;
             case '%':
                 if(type == Token::STRING || type == Token::FORMATTED_STRING) {

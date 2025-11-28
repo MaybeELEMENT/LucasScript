@@ -89,6 +89,10 @@
         {
           "name": "keyword.loop.until.lexter",
           "match": "\\b(?<=loop[^{]*?)until\\b"
+        },
+        {
+          "name": "keyword.logical.lexter",
+          "match": "\\b(and|or)\\b"
         }
       ]
     },

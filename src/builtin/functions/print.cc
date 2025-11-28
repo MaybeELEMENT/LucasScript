@@ -1,6 +1,6 @@
 #include "all.h"
 
-void print(Variable& arg, Variable::Type type)
+void printFunc(Variable& arg, Variable::Type type)
 {
     // printf("%s\n", Variable::getName(arg.getRefType()).c_str());
     switch (type)
@@ -24,7 +24,7 @@ void print(Variable& arg, Variable::Type type)
             printf("null");
             break;
         case Variable::REFERENCE:
-            print(arg, arg.getRefType());
+            printFunc(arg, arg.getRefType());
             break;
         case Variable::FUNCTION:
             printf("function");
@@ -32,12 +32,20 @@ void print(Variable& arg, Variable::Type type)
     }
 }
 
-Variable Functions::log(std::vector<Variable> args, const Token& curToken)
+Variable Functions::printl(std::vector<Variable> args, const Token& curToken)
 {
     for (auto arg : args)
     {
-        print(arg, arg.getType());
+        printFunc(arg, arg.getType());
     }
     printf("\n");
+    return Variable();
+}
+Variable Functions::print(std::vector<Variable> args, const Token& curToken)
+{
+    for (auto arg : args)
+    {
+        printFunc(arg, arg.getType());
+    }
     return Variable();
 }

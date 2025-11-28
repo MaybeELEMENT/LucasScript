@@ -1,6 +1,7 @@
 // By Lucas
 #include "variable.h"
 #include <parse/parser.h>
+#include <cmath>
 
 Variable::Type Variable::getType() const
 {
@@ -392,6 +393,31 @@ Variable Variable::add(Variable &b, const Token &curToken)
 {
     Type bType = b.getType();
 
+    if (type == STRING || bType == STRING)
+    {
+        std::string s1;
+        if (type == STRING) s1 = getValue<std::string>();
+        else if (type == INTEGER) s1 = std::to_string(getValue<long>());
+        else if (type == DECIMAL) {
+            s1 = std::to_string(getValue<double>());
+            // Remove trailing zeros for cleaner string representation
+            s1.erase(s1.find_last_not_of('0') + 1, std::string::npos);
+            if (s1.back() == '.') s1.pop_back();
+        }
+        else if (type == BOOLEAN) s1 = getValue<bool>() ? "true" : "false";
+
+        std::string s2;
+        if (bType == STRING) s2 = b.getValue<std::string>();
+        else if (bType == INTEGER) s2 = std::to_string(b.getValue<long>());
+        else if (bType == DECIMAL) {
+            s2 = std::to_string(b.getValue<double>());
+            s2.erase(s2.find_last_not_of('0') + 1, std::string::npos);
+            if (s2.back() == '.') s2.pop_back();
+        }
+        else if (bType == BOOLEAN) s2 = b.getValue<bool>() ? "true" : "false";
+
+        return Variable(s1 + s2);
+    }
     // Handle numeric/bool cross-type comparisons
     if ((type == BOOLEAN && (bType == INTEGER || bType == DECIMAL)) ||
         (bType == BOOLEAN && (type == INTEGER || type == DECIMAL)))
@@ -547,6 +573,61 @@ Variable Variable::divide(Variable &b, const Token &curToken)
     }
 
     throw ParserException(ParserException::UNMATCH_OPERAND, "'/' cannot be used for " + getName(), curToken.getLine(), curToken.getCol());
+}
+Variable Variable::modulus(Variable &b, const Token &curToken)
+{
+    Type bType = b.getType();
+
+    // Handle numeric/bool cross-type
+    auto toDouble = [](Variable &v, const Token& curToken, std::string name) -> double
+    {
+        switch (v.getType())
+        {
+        case INTEGER:
+            return static_cast<double>(v.getValue<long>());
+        case DECIMAL:
+            return v.getValue<double>();
+        case BOOLEAN:
+            return v.getValue<bool>() ? 1.0 : 0.0;
+        default:
+            throw ParserException(ParserException::UNMATCH_OPERAND, "'/' cannot be used for " + name, curToken.getLine(), curToken.getCol());
+        }
+    };
+
+    // Convert both sides to double for division calculation
+    if ((type == INTEGER || type == DECIMAL || type == BOOLEAN) &&
+        (bType == INTEGER || bType == DECIMAL || bType == BOOLEAN))
+    {
+        double left = toDouble(*this, curToken, getName());
+        double right = toDouble(b, curToken, getName());
+
+        if (right == 0.0)
+            throw ParserException(ParserException::DIVIDE_BY_ZERO, "division by zero", curToken.getLine(), curToken.getCol());
+
+        double result = std::fmod(left, right);
+        if(floor(result)==ceil(result))
+            return Variable(static_cast<long>(result));
+
+        // Otherwise → promote to DECIMAL
+        return Variable(result);
+    }
+
+    throw ParserException(ParserException::UNMATCH_OPERAND, "'/' cannot be used for " + getName(), curToken.getLine(), curToken.getCol());
+}
+Variable Variable::reverse(const Token &curToken)
+{
+
+    // Handle numeric/bool cross-type
+    
+
+    // Convert both sides to double for division calculation
+    if (type == BOOLEAN)
+    {
+        // Otherwise → promote to DECIMAL
+        return Variable(!getValue<bool>());
+    }
+
+    throw ParserException(ParserException::UNMATCH_OPERAND, "'!' can only be used for boolean type", curToken.getLine(), curToken.getCol());
 }
 std::string Variable::getName()
 {

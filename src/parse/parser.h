@@ -42,7 +42,8 @@ public:
         NOT_CALLABLE,
         UNMATCH_ARGUMENT,
         UNMATCH_OPERAND,
-        UNSUPPORTED_OPERATOR
+        UNSUPPORTED_OPERATOR,
+        INVALID_VALUE
     };
     ParserErrorType errorType;
     std::string msg;

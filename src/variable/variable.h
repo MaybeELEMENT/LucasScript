@@ -51,6 +51,7 @@ public:
     Variable(int v) : value((long)v), type(INTEGER) {}
     Variable(double v) : value(v), type(DECIMAL) {}
     Variable(const std::string& v) : value(v), type(STRING) {}
+    Variable(const char* v) : value(std::string(v)), type(STRING) {}
     Variable(bool v) : value(v), type(BOOLEAN) {}
     Variable(std::shared_ptr<Class> v) : value(v), type(CLASS) {}
     Variable(Function v) : value(v), type(FUNCTION) {}
@@ -73,6 +74,8 @@ public:
     Variable subtract(Variable& b, const Token& curToken);
     Variable mutliply(Variable& b, const Token& curToken);
     Variable divide(Variable& b, const Token& curToken);
+    Variable modulus(Variable& b, const Token& curToken);
+    Variable reverse(const Token& curToken);
     Variable* getReferenced() {
         if (type == REFERENCE) {
             Variable* var = std::get<Reference>(value).get();
