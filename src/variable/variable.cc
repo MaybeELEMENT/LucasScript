@@ -105,7 +105,7 @@ Variable Variable::makeRef(Variable &v)
 
 Variable Variable::compareEqual(Variable &b, const Token &curToken)
 {
-    Type bType = b.getType();
+    Type bType = b.getRefType();
 
     // Numeric <-> Boolean
     if ((type == BOOLEAN && (bType == INTEGER || bType == DECIMAL)) ||
@@ -149,7 +149,7 @@ Variable Variable::compareEqual(Variable &b, const Token &curToken)
 
 Variable Variable::compareInequal(Variable &b, const Token &curToken)
 {
-    Type bType = b.getType();
+    Type bType = b.getRefType();
 
     // Handle numeric/bool cross-type comparisons
     if ((type == BOOLEAN && (bType == INTEGER || bType == DECIMAL)) ||
@@ -192,7 +192,7 @@ Variable Variable::compareInequal(Variable &b, const Token &curToken)
 
 Variable Variable::compareAnd(Variable &b, const Token &curToken)
 {
-    Type bType = b.getType();
+    Type bType = b.getRefType();
     if (type != bType)
     {
         return Variable(false);
@@ -209,7 +209,7 @@ Variable Variable::compareAnd(Variable &b, const Token &curToken)
 
 Variable Variable::compareOr(Variable &b, const Token &curToken)
 {
-    Type bType = b.getType();
+    Type bType = b.getRefType();
     if (type != bType)
     {
         return Variable(false);
@@ -225,7 +225,7 @@ Variable Variable::compareOr(Variable &b, const Token &curToken)
 }
 Variable Variable::compareGreater(Variable &b, const Token &curToken)
 {
-    Type bType = b.getType();
+    Type bType = b.getRefType();
 
     // Handle numeric/bool cross-type comparisons
     if ((type == BOOLEAN && (bType == INTEGER || bType == DECIMAL)) ||
@@ -267,7 +267,7 @@ Variable Variable::compareGreater(Variable &b, const Token &curToken)
 
 Variable Variable::compareSmaller(Variable &b, const Token &curToken)
 {
-    Type bType = b.getType();
+    Type bType = b.getRefType();
 
     // Handle numeric/bool cross-type comparisons
     if ((type == BOOLEAN && (bType == INTEGER || bType == DECIMAL)) ||
@@ -308,7 +308,7 @@ Variable Variable::compareSmaller(Variable &b, const Token &curToken)
 }
 Variable Variable::compareGreaterEqual(Variable &b, const Token &curToken)
 {
-    Type bType = b.getType();
+    Type bType = b.getRefType();
 
     // Handle numeric/bool cross-type comparisons
     if ((type == BOOLEAN && (bType == INTEGER || bType == DECIMAL)) ||
@@ -350,7 +350,7 @@ Variable Variable::compareGreaterEqual(Variable &b, const Token &curToken)
 
 Variable Variable::compareSmallerEqual(Variable &b, const Token &curToken)
 {
-    Type bType = b.getType();
+    Type bType = b.getRefType();
 
     // Handle numeric/bool cross-type comparisons
     if ((type == BOOLEAN && (bType == INTEGER || bType == DECIMAL)) ||
@@ -391,7 +391,7 @@ Variable Variable::compareSmallerEqual(Variable &b, const Token &curToken)
 }
 Variable Variable::add(Variable &b, const Token &curToken)
 {
-    Type bType = b.getType();
+    Type bType = b.getRefType();
 
     if (type == STRING || bType == STRING)
     {
@@ -455,7 +455,7 @@ Variable Variable::add(Variable &b, const Token &curToken)
 }
 Variable Variable::subtract(Variable &b, const Token &curToken)
 {
-    Type bType = b.getType();
+    Type bType = b.getRefType();
 
     // Handle numeric/bool cross-type comparisons
     if ((type == BOOLEAN && (bType == INTEGER || bType == DECIMAL)) ||
@@ -492,7 +492,7 @@ Variable Variable::subtract(Variable &b, const Token &curToken)
 }
 Variable Variable::mutliply(Variable &b, const Token &curToken)
 {
-    Type bType = b.getType();
+    Type bType = b.getRefType();
 
     // Handle numeric/bool cross-type comparisons
     if ((type == BOOLEAN && (bType == INTEGER || bType == DECIMAL)) ||
@@ -529,12 +529,12 @@ Variable Variable::mutliply(Variable &b, const Token &curToken)
 }
 Variable Variable::divide(Variable &b, const Token &curToken)
 {
-    Type bType = b.getType();
+    Type bType = b.getRefType();
 
     // Handle numeric/bool cross-type
     auto toDouble = [](Variable &v, const Token& curToken, std::string name) -> double
     {
-        switch (v.getType())
+        switch (v.getRefType())
         {
         case INTEGER:
             return static_cast<double>(v.getValue<long>());
@@ -576,12 +576,12 @@ Variable Variable::divide(Variable &b, const Token &curToken)
 }
 Variable Variable::modulus(Variable &b, const Token &curToken)
 {
-    Type bType = b.getType();
+    Type bType = b.getRefType();
 
     // Handle numeric/bool cross-type
     auto toDouble = [](Variable &v, const Token& curToken, std::string name) -> double
     {
-        switch (v.getType())
+        switch (v.getRefType())
         {
         case INTEGER:
             return static_cast<double>(v.getValue<long>());

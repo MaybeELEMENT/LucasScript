@@ -1,8 +1,7 @@
 #include "all.h"
 #include <parse/parser.h>
-#include <iostream>
 
-Variable Functions::toInt(std::vector<Variable> args, const Token& curToken)
+Variable Functions::t_decimal(std::vector<Variable> args, const Token& curToken)
 {
     if (args.size() != 1) {
         std::string msg;
@@ -11,12 +10,12 @@ Variable Functions::toInt(std::vector<Variable> args, const Token& curToken)
         msg += " were provided";
         throw ParserException(ParserException::UNMATCH_ARGUMENT, msg, curToken.getLine(), curToken.getCol());
     }
-    if (args[0].getType() == Variable::DECIMAL) {
-        return Variable(static_cast<long>(args[0].getValue<double>()));
+    if (args[0].getType() == Variable::INTEGER) {
+        return Variable(static_cast<long>(args[0].getValue<long>()));
     }
     if(args[0].getType() == Variable::STRING) {
         try {
-            return Variable(std::stoi(args[0].getValue<std::string>()));
+            return Variable(std::stod(args[0].getValue<std::string>()));
         }
         catch(std::invalid_argument e) {
             std::string msg;
@@ -26,5 +25,5 @@ Variable Functions::toInt(std::vector<Variable> args, const Token& curToken)
             throw ParserException(ParserException::INVALID_VALUE, msg, curToken.getLine(), curToken.getCol());
         }
     }
-    throw ParserException(ParserException::EXPECTED_EXPRESSION, "argument must be a decimal or string", curToken.getLine(), curToken.getCol());
+    throw ParserException(ParserException::EXPECTED_EXPRESSION, "argument must be an int or string", curToken.getLine(), curToken.getCol());
 }

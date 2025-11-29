@@ -1,0 +1,4 @@
+x = 10
+ref y = x
+y = 5
+printl("Y is " + y)

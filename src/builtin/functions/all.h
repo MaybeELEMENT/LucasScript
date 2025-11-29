@@ -9,8 +9,10 @@ namespace Functions {
     Variable typeof_func(std::vector<Variable> args, const Token& curToken);
     Variable input(std::vector<Variable> args, const Token& curToken);
     Variable sleep(std::vector<Variable> args, const Token& curToken);
-    Variable toInt(std::vector<Variable> args, const Token& curToken);
-    Variable toString(std::vector<Variable> args, const Token& curToken);
+    Variable t_int(std::vector<Variable> args, const Token& curToken);
+    Variable string(std::vector<Variable> args, const Token& curToken);
+    Variable t_bool(std::vector<Variable> args, const Token& curToken);
+    Variable t_decimal(std::vector<Variable> args, const Token& curToken);
     Variable sys_run(std::vector<Variable> args, const Token& curToken);
     inline std::unordered_map<std::string, Variable(*)(std::vector<Variable>, const Token&)> functions = {
         {"printl", printl},
@@ -18,8 +20,11 @@ namespace Functions {
         {"typeof", typeof_func},
         {"input", input},
         {"sleep", sleep},
-        {"toInt", toInt},
-        {"sysRun", sys_run}
+        {"int", t_int},
+        {"sysRun", sys_run},
+        {"string", string},
+        {"bool", t_bool},
+        {"decimal", t_decimal},
     };
 };
 

@@ -6,6 +6,30 @@
 #include "lexer.h"
 #include <variable/variable.h>
 
+struct ReturnException {
+    Variable value;
+    ReturnException(Variable v) : value(v) {}
+};
+
+// Added BreakException to signal loop exit
+struct BreakException {
+    unsigned int line;
+    unsigned int col;
+    BreakException(unsigned int l, unsigned int c) : line(l), col(c) {}
+};
+
+enum Mode
+{
+    NONE,
+    REFERENCE,
+    RETURN,
+    IF,
+    ELIF,
+    ELSE,
+    WHILE, 
+    BREAK // Added BREAK mode
+};
+
 namespace Parser_Def {
     inline const std::vector<std::string> keywords = {
         "import",
@@ -43,7 +67,8 @@ public:
         UNMATCH_ARGUMENT,
         UNMATCH_OPERAND,
         UNSUPPORTED_OPERATOR,
-        INVALID_VALUE
+        INVALID_VALUE,
+        RECURSION_ERROR
     };
     ParserErrorType errorType;
     std::string msg;
@@ -83,7 +108,6 @@ class Parser {
     std::vector<Token> tokens;
 public:
     Parser(std::vector<Token> tokens);
-
     void start();
 };
 

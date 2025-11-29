@@ -1,6 +1,5 @@
 #include "all.h"
 #include <parse/parser.h>
-#include <iostream>
 
 Variable getTypeString(Variable& var) {
     switch(var.getType()) {
@@ -21,7 +20,7 @@ Variable getTypeString(Variable& var) {
     }
 }
 
-Variable Functions::toString(std::vector<Variable> args, const Token& curToken)
+Variable Functions::string(std::vector<Variable> args, const Token& curToken)
 {
     if (args.size() != 1) {
         std::string msg;
